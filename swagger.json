@@ -1,0 +1,258 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Project_LogiOutSource.WebAPI",
+      "version": "1.0"
+    },
+    "paths": {
+      "/api/Invoice": {
+        "post": {
+          "tags": [
+            "Invoice"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseInvoiceDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseInvoiceDTO"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseInvoiceDTO"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/Token/GetToken": {
+        "post": {
+          "tags": [
+            "Token"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginViewModel"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginViewModel"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/Token/RefreshToken": {
+        "post": {
+          "tags": [
+            "Token"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenRequestViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenRequestViewModel"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenRequestViewModel"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      }
+
+    },
+    "components": {
+      "schemas": {
+        "LoginViewModel": {
+          "type": "object",
+          "properties": {
+            "userName": {
+              "type": "string",
+              "nullable": false
+           
+            },
+            "password": {
+              "type": "string",
+              "nullable": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "PurchaseInvoiceDTO": {
+          "type": "object",
+          "properties": {
+            "number": {
+              "type": "string",
+              "nullable": false,
+              "description" : "Gönderilmez ise otomatik atanır"
+              
+            },
+            "invoiceDate": {
+              "type": "string",
+              "format": "date-time",
+              "description" : "Format = yyyy-MM-dd"
+            },
+            "editingDate": {
+              "type": "string",
+              "format": "date-time",
+              "description" : "Format = yyyy-MM-dd"
+
+            },
+            "documentNo": {
+              "type": "string",
+              "nullable": true
+            },
+            "customerCode": {
+              "type": "string",
+              "nullable": false
+            },
+            "serviceCode": {
+              "type": "string",
+              "nullable": false
+            },
+            "shippingAccountCode": {
+              "type": "string",
+              "nullable": false
+            },
+            "vatRate": {
+              "type": "number",
+              "format": "double",
+              "nullable": false,
+              "description" : "18.0"
+            },
+            "commercialTransactionGroup": {
+              "type": "string",
+              "nullable": false
+            },
+            "line": {
+              "$ref": "#/components/schemas/PurchaseInvoiceLineDTO"
+            },
+            "invoiceType": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": false,
+              "description" : "Gönderilmez ise 4 atanır"
+
+            },
+            "currency": {
+              "type": "integer",
+              "format": "int32",
+                "nullable": false,
+              "description" : "Gönderilmez ise 160 atanır"
+            },
+            "specialCode": {
+              "type": "string",
+              "nullable": false,
+              "description" : "Gönderilmez ise OPERASYON olarak atanır"
+            }
+          },
+          "additionalProperties": false
+        },
+        "PurchaseInvoiceLineDTO": {
+          "type": "object",
+          "properties": {
+            "unit": {
+              "type": "string",
+                "nullable": false,
+              "description" : "Gönderilmez ise ADET olarak atanır"
+            },
+            "unitPrice": {
+              "type": "number",
+              "format": "double",
+              "nullable": false,
+              "description" : "Gönderilmez ise OPERASYON atanır"
+            },
+            "quantity": {
+              "type": "number",
+              "format": "double",
+              "nullable": false,
+              "description" : "Gönderilmez ise 1 atanır"
+            },
+            "lineType": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": false,
+              "description" : "Gönderilmez ise 4 atanır"
+            },
+            "isWithholdingTax": {
+              "type": "boolean",
+              "nullable": false,
+              "description" : "tevkifatsız 0,tevkifatlı 1 olarak gelicek"
+            },
+            "withholdingTaxNumerator": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": false,
+              "description" : "Gönderilmez ise 2 atanır"
+            },
+            "withholdingTaxDenominator": {
+              "type": "integer",
+              "format": "int32",
+                   "nullable": false,
+              "description" : "Gönderilmez ise 10 atanır"
+            },
+            "withholdingTaxCode": {
+              "type": "integer",
+              "format": "int32",
+                   "nullable": false,
+              "description" : "Gönderilmez ise 224 atanır"
+            }
+          },
+          "additionalProperties": false
+        },
+        "TokenRequestViewModel": {
+          "type": "object",
+          "properties": {
+            "accessToken": {
+              "type": "string",
+              "nullable": false
+            },
+            "refreshToken": {
+              "type": "string",
+              "nullable": false
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  }
